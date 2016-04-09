@@ -40,6 +40,11 @@ class Graph {
 		if (numOdd == 0) {
 			s.push(1);
 			handleFindRoute(s);
+			String str = "";
+			for (int ii = 0; ii < s.size(); ii++) {
+				str += s.get(ii) + " ";
+			}
+			return str;
 		} else if (numOdd == 2) {
 			for (int i = 0; i < nodes.length; i++) {
 				if (getDegree(i + 1) % 2 != 0) {// odd little
