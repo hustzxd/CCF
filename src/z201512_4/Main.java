@@ -36,28 +36,30 @@ class Graph {
 
 	public String findRoute() {
 		Stack<Integer> s = new Stack<>();
-		if (getDegree(1) % 2 == 0) {
-			if (numberOfOdd() != 0)
-				return "-1 ";
+		int numOdd = numberOfOdd();
+		if (numOdd == 0) {
 			s.push(1);
 			handleFindRoute(s);
-		} else {
-			if (numberOfOdd() != 2) {
-				return "-1 ";
+		} else if (numOdd == 2) {
+			for (int i = 0; i < nodes.length; i++) {
+				if (getDegree(i + 1) % 2 != 0) {// odd little
+					s.push(i + 1);
+					handleFindRoute(s);
+					String str = "";
+					for (int ii = 0; ii < s.size(); ii++) {
+						str += s.get(ii) + " ";
+					}
+					return str;
+				}
 			}
-			s.push(1);
-			handleFindRoute(s);
 		}
-		String str = "" ;
-		for(int i =0;i<s.size();i++) {
-			str += s.get(i)+" ";
-		}
-		return str;
+		return "-1";
+
 	}
 
 	private boolean handleFindRoute(Stack<Integer> s) {
 		// TODO Auto-generated method stub
-		//System.out.println(s);
+		// System.out.println(s);
 		int top = s.get(s.size() - 1);
 		List<Integer> nodes = findNext(top);
 		for (int i = 0; i < nodes.size(); i++) {
@@ -67,10 +69,11 @@ class Graph {
 			s.push(nodes.get(i));
 			// set visited
 			setVisited(top, nodes.get(i), true);
-			if(!handleFindRoute(s)){
+			if (!handleFindRoute(s)) {
 				oldx = s.pop();
-				oldy = s.get(s.size()-1);
-				setVisited(oldx, oldy, false);;
+				oldy = s.get(s.size() - 1);
+				setVisited(oldx, oldy, false);
+				;
 			}
 		}
 		if (s.size() == m + 1) {// find a route
